@@ -19,6 +19,7 @@ export class ProductosComponent {
 	
 	constructor(private modalService: NgbModal) {
 
+	//se inicializan los productos	
 	this.productos = [
 	{"id":1,"nombre": "producto 01", "precio": 2000,"inventario": "5", "imagen":"https://www.milo.com.co/site/wp-content/uploads/2017/07/milo-lata-4-210x300.png"},
 	{"id":2,"nombre": "producto 02", "precio": 2000,"inventario": "5", "imagen": "http://cdn.glamour.mx/uploads/images/thumbs/mx/glam/2/s/2017/02/productos_ganadores_de_premios_belleza_glamour_mexico_2016_579534630_413x620.jpg"	},

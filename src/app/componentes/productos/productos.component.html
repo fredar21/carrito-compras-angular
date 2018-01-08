@@ -1,3 +1,5 @@
+<!-- /Para la maquetacion se utilizo Boostrap 4 -->
+
 
 <nav class="navbar sticky-top navbar-toggleable-md bg-inverse"> 
 	<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +52,7 @@
 	<div class="row">
 		<div  class="col-lg-3 col-md-6 mb-3" *ngFor="let producto of productosStorage; let i=index"  >
 			<div class="card h-100 espaciado" *ngIf="producto.inventario > 0" >
-				<img class="card-img-top" src="http://placehold.it/700x400" alt="">
+				<img class="card-img-top imagen-producto" src="http://placehold.it/700x400" alt="">
 				<div class="card-body">
 					<h4 class="card-title espaciado-top">
 						<a href="#">{{producto.nombre}}</a>

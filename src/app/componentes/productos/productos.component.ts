@@ -44,6 +44,7 @@ export class ProductosComponent {
 
 	];
 
+
 	this.obtenerLocalStorage();
 
 	let comprobarStorageCarrito= JSON.parse(localStorage.getItem("carrito"));
@@ -64,6 +65,8 @@ export class ProductosComponent {
 	  this.productosStorage = JSON.parse(localStorage.getItem("productos"));
 	}
 
+
+	//Esta funcion elimina el producto al agregarlo al carrito
 	eliminar(i){
 		this.agregar(i);
 		//this.productos.splice(i,1);
@@ -74,22 +77,26 @@ export class ProductosComponent {
 
 	}
 
+	//Se encarga de eliminar los productos que estan agregados en el carrito
 	eliminarProductoCarrito(i){
 		let carrito= this.obtenerLocalStorage();
+		//Se actulizan los inventarios
 		this.actualizarInventariosEliminarCarrito(i);
 		carrito.splice(i,1);
-		console.log(carrito);
-		console.log(i);
 		this.cantidad= carrito.length;
+		//Se guarda el nuevo arreglo en el local Storage
 		localStorage.setItem("carrito", JSON.stringify(carrito));
+		//Se realiza la sumatoria del precio de los productos
 		this.sumar(0);
 		
 	}
 
+	//obtiene los productos del carrito desde Local Storage
 	elementosCarrito(){
 		this.cantidad = JSON.parse(localStorage.getItem("carrito")).length;
 	}
 
+	//Añade los productos al carrito
 	agregar(i){
 		let agregar = this.productosStorage[i];
 		let comprobarStorageCarrito= JSON.parse(localStorage.getItem("carrito"));
@@ -105,6 +112,7 @@ export class ProductosComponent {
 		this.sumar(1);
 	}
 	
+	//Calcula la suma de los precios de los productos en el carrito
 	sumar(valor){
 		let cantidadProductosCarrito = this.cantidad+valor;
 		let carrito= this.obtenerLocalStorage();
@@ -116,43 +124,23 @@ export class ProductosComponent {
 
 	}
 
-	/*
-	agregar(i){
-		let agregar = this.productos[i];
-		console.log(agregar);
-		this.carrito.push(agregar);
-		this.guardarLocalStorage();
-		//this.sumar();
-
-	}
-*/
+	//guarda los productos del carrito en el local Storage
 	guardarLocalStorage(){
 		localStorage.setItem("carrito", JSON.stringify(this.carrito));
 	}
 
+	//Obtiene los elementos del carrito desde el Local Storage
 	obtenerLocalStorage(){
 		this.elementosCarritoStorage = JSON.parse(localStorage.getItem("carrito"));
 		return this.elementosCarritoStorage;
 		
 }
 
-
-  //Aqui esta el error
-  /*
-	guardarLocalStorage(){
-		this.elementosCarrito = JSON.parse(localStorage.getItem("carrito"));
-
-		if(this.elementosCarrito==null){
-			localStorage.setItem("carrito", JSON.stringify(this.carrito));
-		}else{
-		//JSON.stringify(this.elementosCarrito);	
-		this.elementosCarrito.push(this.carrito);
-		localStorage.setItem("carrito", JSON.stringify(this.elementosCarrito));
-		console.log(this.elementosCarrito);
-		}
-	}
-  */
-
+	
+	/*
+	 Actualiza los inventarios al añadir los productos al carrito, recibe como parametro el indice
+	 del arreglo de objetos de los productos que esta almacenado en el Local Storage
+	*/
 	actualizarInventariosAgregarCarrito(i){
 		let inputId= i+1;
 		let tamano = this.productosStorage.length;
@@ -164,6 +152,12 @@ export class ProductosComponent {
 		}
 		localStorage.setItem("productos", JSON.stringify(this.productosStorage));
 	}
+
+
+	/*
+	 Actualiza los inventarios al añadir los productos al carrito, recibe como parametro el indice
+	 del arreglo de objetos del carrito de compras que esta almacenado en el Local Storage
+	*/
 
 	actualizarInventariosEliminarCarrito(i){
 		let inputId= this.elementosCarritoStorage[i].id;
@@ -179,15 +173,17 @@ export class ProductosComponent {
 	}
 
 
-
+	//Funcion Para la venta Modal, para realizarla se utilizo https://ng-bootstrap.github.io
 	open(content) {
     this.modalService.open(content).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+    this.sumar(0);
   }
 
+//Funcion Para la venta Modal, para realizarla se utilizo https://ng-bootstrap.github.io
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
